@@ -36,6 +36,7 @@ class SmsController extends Controller
     public function sendOTP(Request $request,$phone){
         // dd($request);
         // dd($phone);
+        $otp = rand(100000  ,999999);
         $affected = DB::table('users')
               ->where('mobile', $phone)
               ->update(['otp' => $otp]);
@@ -44,12 +45,12 @@ class SmsController extends Controller
         if($affected == 1){
             // $response = file_get_contents($api);
             echo "SMS Sent Successfully";
+        
+        
+            $message = "Hi User, your OTP to login is ".$otp.". Thank, Team eQuasar Solutions";
+            $message = urlencode($message);
+            echo $api = "http://cloud.smsindiahub.in/api/mt/SendSMS?APIKey=No30W31Hnkmi7KNd4EIRYg&senderid=IMHAPP&channel=trans&DCS=0&flashsms=0&number=".$phone."&text=".$message;
         }
-        $otp = rand(100000  ,999999);
-        $message = "Hi User, your OTP to login is ".$otp.". Thank, Team eQuasar Solutions";
-        $message = urlencode($message);
-        echo $api = "http://cloud.smsindiahub.in/api/mt/SendSMS?APIKey=No30W31Hnkmi7KNd4EIRYg&senderid=IMHAPP&channel=trans&DCS=0&flashsms=0&number=".$phone."&text=".$message;
-
         // $response = file_get_contents($api);
         
         // die($affected);
